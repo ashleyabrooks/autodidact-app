@@ -20,6 +20,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(70), nullable=False)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(70), nullable=False)
 
     def __repr__(self):
         """Add helpful representation of model object when printed."""
@@ -53,11 +55,12 @@ class Content(db.Model):
 
     content_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     content_type = db.Column(db.String(15), nullable=False)
+    content_url = db.Column(db.String(300), nullable=False)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.topic_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
 
     topic = db.relationship('Topic', backref=db.backref('topics'))
-    user = db.relationship('User', backref=db.backref('users'))
+    user = db.relationship('User')
 
     def __repr__(self):
         """Add helpful representation of model object when printed."""
