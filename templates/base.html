@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <title>{% block title %} TITLE GOES HERE {% endblock %}</title>
+</head>
+
+<body>
+
+
+
+{% if 'user' in session %}
+    <a href='/logout'>Logout</a>
+{% else %}
+    <a href='/login'>Login</a>
+{% endif %}
+
+
+{% block content %} 
+
+BODY CONTENT GOES HERE
+
+{% endblock %}
+
+</body>
+</html>

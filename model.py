@@ -55,9 +55,10 @@ class Content(db.Model):
 
     content_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     content_type = db.Column(db.String(15), nullable=False)
-    content_url = db.Column(db.String(300), nullable=False)
+    content_title = db.Column(db.String(50), nullable=True)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.topic_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    content_url = db.Column(db.String(300), nullable=False)
 
     topic = db.relationship('Topic', backref=db.backref('topics'))
     user = db.relationship('User')
