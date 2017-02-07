@@ -44,7 +44,7 @@ def handle_login():
 
     if entered_pw == user.password:
         session['user'] = user.user_id
-        return redirect('/curriculum')
+        return redirect('/topics')
     else:
         flash('Incorrect username or password.')
         return redirect('/login')
@@ -57,11 +57,29 @@ def handle_logout():
     return redirect('/')
 
 
-@app.route('/curriculum')
-def show_curriculum_overview():
-    """Display curriculum overview page."""
+@app.route('/topics')
+def show_topic_overview():
+    """Display topic overview page."""
 
-    return render_template('curriculum.html')
+    topics = db.session.query(Topic.topic_name, 
+                              Topic.topic_id).filter(Topic.user_id == session['user']).all()
+
+    return render_template('topics.html', topics=topics)
+
+
+@app.route('/add-topic')
+def add_new_topic():
+    """Display add-topic page."""
+
+    return render_template('add-topic.html')
+
+@app.route('/curriculum/<int:topic_id>')
+def show_curriculum(topic_id):
+    """Display curriculum page from topic specified in the URL."""
+
+    curric_items = db.session.query(Content).filter(Content.topic_id == topic_id).all()
+
+    return render_template('curriculum.html', curric_items=curric_items)
 
 
 @app.route('/add-article')
@@ -72,21 +90,22 @@ def add_article():
 
 
 @app.route('/submit-add-article')
-def submit_article():
+def submit_content():
     """Add article to user's curriculum."""
 
     content_title = request.args.get('content_title')
     content_url = request.args.get('content_url')
+    content_type = request.args.get('content_type')
 
-    article = Content(content_type='article', content_title=content_title, 
+    new_content = Content(content_type=content_type, content_title=content_title, 
                                               topic_id=1, 
                                               user_id=session['user'],
                                               content_url=content_url)
 
-    db.session.add(article)
+    db.session.add(new_content)
     db.session.commit()
 
-    return redirect('/curriculum')
+    return redirect('/curriculum-overview')
 
 
 

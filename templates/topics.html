@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Topics{% endblock %}
+<script src='static/helper.js'></script>
+<script src='http://code.jquery.com/jquery.js'></script>
+
+{% block content %}
+<h1>Your Topics</h1>
+
+<body>
+
+    <br><br>
+    <a href='/add-topic'><button type='button' id='add-topic-button'> + Add New Topic </button></a>
+    <br><br>
+    {% for topic in topics %}
+    <div><a href='/curriculum/{{ topic.topic_id }}'>{{ topic.topic_name }}</a></div>
+    {% endfor %}
+
+</body>
+
+{% endblock %}

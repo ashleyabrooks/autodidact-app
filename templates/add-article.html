@@ -5,9 +5,14 @@
 {% block content %}
 <br><br>
 <form action='/submit-add-article'>
-Article Title: <input type='text' name='content_title'><br><br>
-Article URL: <input type='text' name='content_url'><br><br>
-<input type='submit' value='Add Article to Curriculum'>
+Content Title: <input type='text' name='content_title'><br><br>
+Content URL: <input type='text' name='content_url'><br><br>
+Content Type:<br>
+    Article <input type='radio' name='content_type' value='article'>
+    Video <input type='radio' name='content_type' value='video'>
+    Book <input type='radio' name='content_type' value='book'>
+    Note <input type='radio' name='content_type' value='note'>
+<input type='submit' value='Add to Curriculum'>
 
 </form>
 
