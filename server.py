@@ -64,6 +64,31 @@ def show_curriculum_overview():
     return render_template('curriculum.html')
 
 
+@app.route('/add-article')
+def add_article():
+    """Display add-article page."""
+
+    return render_template('add-article.html')
+
+
+@app.route('/submit-add-article')
+def submit_article():
+    """Add article to user's curriculum."""
+
+    content_title = request.args.get('content_title')
+    content_url = request.args.get('content_url')
+
+    article = Content(content_type='article', content_title=content_title, 
+                                              topic_id=1, 
+                                              user_id=session['user'],
+                                              content_url=content_url)
+
+    db.session.add(article)
+    db.session.commit()
+
+    return redirect('/curriculum')
+
+
 
 if __name__ == "__main__":
     app.debug = True

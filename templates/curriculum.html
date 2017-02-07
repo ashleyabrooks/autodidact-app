@@ -2,6 +2,7 @@
 
 {% block title %}Curriculum{% endblock %}
 <script src='static/helper.js'></script>
+<script src='http://code.jquery.com/jquery.js'></script>
 
 {% block content %}
 <h1>Your Curriculum</h1>
@@ -9,7 +10,19 @@
 <body>
 
     Add New Item:<br><br>
-    <button type='button' id='add-article-button'> + Add Article </button>
+    <a href='/add-article'><button type='button' id='add-article-button'> + Add Article </button></a>
+
+    <!-- // <script>
+    //     $('#add-article-button').on('click', function () {
+    //         window.location.href='/add-article';
+    //     });
+
+    // </script>
+ -->
+
+
+
+
     <button type='button' id='add-video-button'> + Add Video </button>
     <button type='button' id='add-book-button'> + Add Book </button>
     <button type='note' id='add-note-button'> + Add Note </button>

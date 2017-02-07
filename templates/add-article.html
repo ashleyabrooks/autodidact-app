@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Login to Autodidact{% endblock %}
+
+{% block content %}
+<br><br>
+<form action='/submit-add-article'>
+Article Title: <input type='text' name='content_title'><br><br>
+Article URL: <input type='text' name='content_url'><br><br>
+<input type='submit' value='Add Article to Curriculum'>
+
+</form>
+
+
+{% endblock %}
