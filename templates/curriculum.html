@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title %}Curriculum{% endblock %}
+<script src='static/helper.js'></script>
 
 {% block content %}
-    <h1>Your Curriculum</h1>
+<h1>Your Curriculum</h1>
 
-    <body>
+<body>
 
-    <button type='button' id='add-content-button'> + Add New </button>
+    Add New Item:<br><br>
+    <button type='button' id='add-article-button'> + Add Article </button>
+    <button type='button' id='add-video-button'> + Add Video </button>
+    <button type='button' id='add-book-button'> + Add Book </button>
+    <button type='note' id='add-note-button'> + Add Note </button>
 
-
-
-    </body>
+</body>
 
 {% endblock %}
