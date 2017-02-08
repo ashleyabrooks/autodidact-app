@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Topic{% endblock %}
+
+{% block content %}
+<br><br>
+<form action='/create-topic'>
+Topic: <input type='text' name='topic_name'>
+<input type='submit' value='Add to Curriculum'>
+
+</form>
+
+
+{% endblock %}

@@ -89,8 +89,8 @@ def add_content(topic_id):
     return render_template('add-content.html', topic_id=topic_id)
 
 
-@app.route('/submit-add-content')
-def submit_content():
+@app.route('/create-content')
+def create_content():
     """Add content to user's curriculum."""
 
     content_title = request.args.get('content_title')
@@ -108,6 +108,18 @@ def submit_content():
 
     return redirect('/curriculum/%s' % new_content.topic_id)
 
+
+@app.route('/create-topic')
+def create_topic():
+
+    topic_name = request.args.get('topic_name')
+
+    new_topic = Topic(topic_name=topic_name, user_id=session['user'])
+
+    db.session.add(new_topic)
+    db.session.commit()
+
+    return redirect('/topics')
 
 
 if __name__ == "__main__":

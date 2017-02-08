@@ -9,14 +9,17 @@
 
 <body>
 
+    <!--Add Content button: -->
     <br><br>
     <a href='/curriculum/{{ topic_id }}/add-content'><button type='button' id='add-content-button'> + Add Content </button></a>
     <br><br>
     <a href='/topics'><button type='button' id='back-to-topics-button'> &#8592; Back to Topics </button></a>
     <br><br>
 
+
+    <!--Show curriculum list: -->
     {% for item in curric_items %}
-        <a href='{{ item.content_url }}'>{{ item.content_title }}</a><br>
+        <div class='curric-content-item'><a href='https://www.{{ item.content_url }}'>{{ item.content_title }}</a></div><br>
     {% endfor %}
 
 </body>
