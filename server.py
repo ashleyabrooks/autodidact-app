@@ -1,6 +1,6 @@
 import sqlalchemy
 from jinja2 import StrictUndefined
-from flask import (Flask, jsonify, render_template, redirect, request, flash, session)
+from flask import (Flask, jsonify, render_template, redirect, request, flash, session, url_for)
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Content, Topic, connect_to_db, db 
 
@@ -79,33 +79,34 @@ def show_curriculum(topic_id):
 
     curric_items = db.session.query(Content).filter(Content.topic_id == topic_id).all()
 
-    return render_template('curriculum.html', curric_items=curric_items)
+    return render_template('curriculum.html', topic_id=topic_id, curric_items=curric_items)
 
 
-@app.route('/add-article')
-def add_article():
-    """Display add-article page."""
+@app.route('/curriculum/<int:topic_id>/add-content')
+def add_content(topic_id):
+    """Display add-content page."""
 
-    return render_template('add-article.html')
+    return render_template('add-content.html', topic_id=topic_id)
 
 
-@app.route('/submit-add-article')
+@app.route('/submit-add-content')
 def submit_content():
-    """Add article to user's curriculum."""
+    """Add content to user's curriculum."""
 
     content_title = request.args.get('content_title')
     content_url = request.args.get('content_url')
     content_type = request.args.get('content_type')
+    topic_id = request.args.get('topic_id')
 
     new_content = Content(content_type=content_type, content_title=content_title, 
-                                              topic_id=1, 
+                                              topic_id=topic_id, 
                                               user_id=session['user'],
                                               content_url=content_url)
 
     db.session.add(new_content)
     db.session.commit()
 
-    return redirect('/curriculum-overview')
+    return redirect('/curriculum/%s' % new_content.topic_id)
 
 
 
