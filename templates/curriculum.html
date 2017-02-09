@@ -16,31 +16,21 @@
     <a href='/topics'><button type='button' id='back-to-topics-button'> &#8592; Back to Topics </button></a>
     <br><br>
 
-<ol class='curric_items'> <!--Show curriculum list: -->
+<div id='curriculum-list'> <!--Show curriculum list: -->
     
     {% for item in curric_items %}
-        <li> <div id='curric-content-item' ondrop='drop(event)' ondragover='allowDrop(event)'>
-            <a href='https://www.{{ item.content_url }}'>{{ item.content_title }}</a></div><br>
-        </li>
+        <div class='curric-item'>
+            <a href='https://www.{{ item.content_url }}'>{{ item.content_title }}</a><br>
+        </div>
     {% endfor %}
 
-</ol>
+</div>
 
+<script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+  
 <script>
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
-
-    function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
-
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-    }
-
+    var curriculumList = document.getElementById('curriculum-list');
+    var sortable = Sortable.create(curriculumList);
 </script>
 
 </body>
