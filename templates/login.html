@@ -1,9 +1,13 @@
-{% extends 'base.html' %}
+<!doctype html>
+<html>
+<head>
+  <title>Login to Autodidact</title>
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
 
-{% block title %}Login to Autodidact{% endblock %}
-
-{% block content %}
-    <h1>Welcome! Login or create an account to get started with Autodidact.</h1>
+<body>
+<h1>Welcome! Login or create an account to get started with Autodidact.</h1>
 
 <form action='/handle-login' method='POST'>
     Email: <input type='text' name='user_email'><br><br>
@@ -11,5 +15,5 @@
     <input type='submit' name='login' value='Login'>
     <input type='submit' name='create-account' value='Create New Account'>
 </form>
-
-{% endblock %}
+</body>
+</html>

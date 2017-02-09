@@ -8,18 +8,21 @@
 
 <body>
 
-{% if 'user' in session %}
-    <a href='/logout'>Logout</a>
-{% else %}
-    <a href='/login'>Login</a>
-{% endif %}
+<div id='base-side-nav-bar'>
+    <a href='/topics'>Topics</a><br><br>
+    {% if 'user' in session %}
+        <a href='/logout'>Logout</a>
+    {% else %}
+        <a href='/login'>Login</a>
+    {% endif %}
+</div>
 
-
+<div id='base-block-content'>
 {% block content %} 
 
 BODY CONTENT GOES HERE
 
 {% endblock %}
-
+</div>
 </body>
 </html>
