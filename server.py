@@ -30,9 +30,11 @@ def handle_login():
     entered_email = request.form.get('user_email')
     entered_pw = request.form.get('user_pw')
 
+    # Check which button user clicked. If they clicked 'Login', validate login creds.
+    # If clicked 'Create Account', create account and redirect to /topics.
+    
     if request.form.get('login'):
         user = db.session.query(User).filter(User.email == entered_email).one()
-
         if entered_pw == user.password:
             session['user'] = user.user_id
             return redirect('/topics')
