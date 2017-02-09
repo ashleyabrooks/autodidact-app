@@ -6,12 +6,10 @@
     <h1>Welcome! Login or create an account to get started with Autodidact.</h1>
 
 <form action='/handle-login' method='POST'>
-    <!-- First Name: <input type='text' name='first_name'><br><br>
-    Last Name: <input type='text' name='last_name'><br><br> -->
     Email: <input type='text' name='user_email'><br><br>
     Password: <input type='password' name='user_pw' maxlength='70'><br><br>
-    <input type='submit' value='Login'>
-    <!-- <input type='submit' value='Create New Account'> -->
+    <input type='submit' name='login' value='Login'>
+    <input type='submit' name='create-account' value='Create New Account'>
 </form>
 
 {% endblock %}

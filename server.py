@@ -29,30 +29,26 @@ def handle_login():
 
     entered_email = request.form.get('user_email')
     entered_pw = request.form.get('user_pw')
-    # first_name = request.form.get('first_name')
-    # last_name = request.form.get('last_name')
 
-    # try:
-    user = db.session.query(User).filter(User.email == entered_email).one()
-    # except:
-    #     user = User(email=entered_email, password=entered_pw, first_name=first_name, 
-    #                                                           last_name=last_name)
-        # db.session.add(user)
-        # db.session.commit()
-        # flash('Account created. Logged in as %s.' % first_name)
-        # return redirect('/')
+    if request.form.get('login'):
+        user = db.session.query(User).filter(User.email == entered_email).one()
 
-    if entered_pw == user.password:
-        session['user'] = user.user_id
+        if entered_pw == user.password:
+            session['user'] = user.user_id
+            return redirect('/topics')
+        else:
+            flash('Incorrect username or password.')
+            return redirect('/login')
+    elif request.form.get('create-account'):
+        user = User(email=entered_email, password=entered_pw, first_name='Test', last_name='Test')
+        db.session.add(user)
+        db.session.commit()
         return redirect('/topics')
-    else:
-        flash('Incorrect username or password.')
-        return redirect('/login')
 
 
 @app.route('/logout')
 def handle_logout():
-    session.pop('user', None)
+    del session['user']
     flash('You have been logged out.')
     return redirect('/')
 
