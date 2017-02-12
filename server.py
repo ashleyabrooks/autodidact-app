@@ -1,6 +1,6 @@
 import sqlalchemy
 from jinja2 import StrictUndefined
-from flask import (Flask, jsonify, render_template, redirect, request, flash, session, url_for)
+from flask import (Flask, jsonify, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Content, Topic, connect_to_db, db 
 
@@ -32,7 +32,7 @@ def handle_login():
 
     # Check which button user clicked. If they clicked 'Login', validate login creds.
     # If clicked 'Create Account', create account and redirect to /topics.
-    
+
     if request.form.get('login'):
         user = db.session.query(User).filter(User.email == entered_email).one()
         if entered_pw == user.password:
@@ -118,6 +118,18 @@ def create_topic():
     db.session.commit()
 
     return redirect('/topics')
+
+
+@app.route('/save-order', methods=['POST'])
+def save_curric_order():
+    order = request.form.get('order')
+
+    session['curric_order'] = order
+
+
+@app.route('/get-order')
+def get_curric_order():
+    return session['curric_order']
 
 
 if __name__ == "__main__":
