@@ -14,7 +14,7 @@ app.jinja_env.undefined = StrictUndefined
 def homepage():
     """Show homepage."""
 
-    return render_template('homepage.html')
+    return render_template('index.html')
 
 
 @app.route('/login')
@@ -55,14 +55,14 @@ def handle_logout():
     return redirect('/')
 
 
-@app.route('/topics')
+@app.route('/topics.json')
 def show_topic_overview():
     """Display topic overview page."""
 
     topics = db.session.query(Topic.topic_name, 
                               Topic.topic_id).filter(Topic.user_id == session['user']).all()
 
-    return render_template('topics.html', topics=topics)
+    return jsonify(topics=topics)
 
 
 @app.route('/add-topic')
@@ -130,6 +130,11 @@ def save_curric_order():
 @app.route('/get-order')
 def get_curric_order():
     return session['curric_order']
+
+
+@app.route('/react-test')
+def show_react_test():
+    return render_template('react.html')
 
 
 if __name__ == "__main__":
