@@ -59,10 +59,16 @@ def handle_logout():
 def show_topic_overview():
     """Display topic overview page."""
 
-    topics = db.session.query(Topic.topic_name, 
-                              Topic.topic_id).filter(Topic.user_id == session['user']).all()
+    # topics = db.session.query(Topic.topic_name, 
+    #                           Topic.topic_id).filter(Topic.user_id == session['user']).all()
 
-    return jsonify(topics=topics)
+    topics = db.session.query(Topic.topic_name,
+                              Topic.topic_id).filter(Topic.user_id == '1').all()
+
+    print topics
+
+
+    return jsonify({'data': topics})
 
 
 @app.route('/add-topic')
@@ -77,7 +83,7 @@ def show_curriculum(topic_id):
 
     curric_items = db.session.query(Content).filter(Content.topic_id == topic_id).all()
 
-    return render_template('curriculum.html', topic_id=topic_id, curric_items=curric_items)
+    return jsonify(topic_id=topic_id, curric_items=curric_items)
 
 
 @app.route('/curriculum/<int:topic_id>/add-content')
@@ -130,11 +136,6 @@ def save_curric_order():
 @app.route('/get-order')
 def get_curric_order():
     return session['curric_order']
-
-
-@app.route('/react-test')
-def show_react_test():
-    return render_template('react.html')
 
 
 if __name__ == "__main__":
