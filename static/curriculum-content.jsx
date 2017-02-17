@@ -3,7 +3,6 @@
 var CurriculumContent = React.createClass({
 
     render: function() {
-        debugger;
         return (
             <ContentList content={this.props.content} />
         );
@@ -20,7 +19,7 @@ var ContentList = React.createClass({
         return (
             <div>
                 <ul>
-                    {contentList}
+                    <b>Content:</b> {contentList}
                 </ul>
             </div>
         );

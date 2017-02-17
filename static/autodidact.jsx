@@ -1,6 +1,6 @@
 'use strict';
 
-var AutodidactSite = React.createClass({
+var AutodidactApp = React.createClass({
 
     getInitialState: function() {
         return {
@@ -18,6 +18,7 @@ var AutodidactSite = React.createClass({
     },
 
     render: function() {
+        // ensure AJAX call is successful before loading components
         if (this.state.content && this.state.topics)
             return (
                 <div>
@@ -39,17 +40,14 @@ var AutodidactSite = React.createClass({
                                         Curriculum Content 
                                     </ReactRouter.Link>
                                 </li>
+                                <li>
+                                    <ReactRouter.Link to='/login'>
+                                        Login 
+                                    </ReactRouter.Link>
+                                </li>
                             </ul>
                         </div>
                     </nav>
-
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xs-12">
-                                { /* this is where sub-pages of router will go */ }
-                            </div>
-                        </div>
-                    </div>
                     <div>
                         <TopicsList topics={this.state.topics}/>
                         <CurriculumContent content={this.state.content}/>
@@ -61,9 +59,10 @@ var AutodidactSite = React.createClass({
 
 });
 
+
 ReactDOM.render(
     <ReactRouter.Router history={ ReactRouter.browserHistory }>
-        <ReactRouter.Route path="/" component={ AutodidactSite }>
+        <ReactRouter.Route path="/" component={ AutodidactApp }>
             <ReactRouter.Route path="/topics" component={ Topics }/>
             <ReactRouter.Route path="/curriculum-content" component={ CurriculumContent }/>
         </ReactRouter.Route>

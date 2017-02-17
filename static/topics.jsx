@@ -2,9 +2,15 @@
 
 var Topics = React.createClass({
     render: function() {
+        if (this.state.topics)
+            return (
+                <div>
+                    Topics List: <TopicsList topics={this.props.topics}/>
+                </div>
+            );
         return (
             <div>
-                Topics List: <TopicsList topics={this.props.topics}/>
+                Add a topic to get started.
             </div>
         );
     }
@@ -21,7 +27,7 @@ var TopicsList = React.createClass({
         return (
             <div>
                 <ul>
-                    {topicsList}
+                    <b>Topics:</b> {topicsList}
                 </ul>
             </div>
         );
@@ -32,18 +38,15 @@ var TopicItem = React.createClass({
     render: function() {
         return (
             <div>
-                <ReactRouter.Link to='/{this.props.topic_id}/curriculum-content'>
+                <ReactRouter.Link to='/topics/:{this.props.topic_id}/curriculum-content'>
                     {this.props.topic}
                 </ReactRouter.Link>
-            </div>
+            </div> 
         );
-    },
-
-    handleClick: function() {
-        console.log('hi')
     }
-
 });
+
+
 
 
 

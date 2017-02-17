@@ -1,21 +1,21 @@
-import React from 'react';
-import DocumentTitle from 'react-document-title';
-import { LoginForm } from 'react-stormpath';
- 
-export default class LoginPage extends React.Component {
-  render() {
-    return (
-      <DocumentTitle title={`Login`}>
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12">
-              <h3>Login</h3>
-              <hr />
+'use strict';
+
+var LoginPage = React.createClass({
+    render: function() {
+        return (
+            <div>    
+                <h1>Welcome! Login or create an account to get started with Autodidact.</h1>
+
+                <form action='/handle-login' method='POST'>
+                    
+                    Email: <input type='text' name='user_email'><br><br>
+                    Password: <input type='password' name='user_pw' maxlength='70'><br><br>
+                    
+                    <input type='submit' name='login' value='Login'>
+                    <input type='submit' name='create-account' value='Create New Account'>
+                
+                </form>
             </div>
-          </div>
-          <LoginForm />
-        </div>
-      </DocumentTitle>
-    );
-  }
-}
+        );
+    }
+});
