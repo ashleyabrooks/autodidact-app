@@ -65,9 +65,6 @@ def show_topic_overview():
     topics = db.session.query(Topic.topic_name,
                               Topic.topic_id).filter(Topic.user_id == '1').all()
 
-    print topics
-
-
     return jsonify({'data': topics})
 
 
@@ -77,13 +74,14 @@ def add_new_topic():
 
     return render_template('add-topic.html')
 
-@app.route('/curriculum/<int:topic_id>')
-def show_curriculum(topic_id):
+@app.route('/curriculum.json')
+def show_curriculum(): #this used to take in topic_id as an argument in order to get curriculum for specific topic
     """Display curriculum page from topic specified in the URL."""
 
-    curric_items = db.session.query(Content).filter(Content.topic_id == topic_id).all()
+    curric_items = db.session.query(Content.content_title,
+                                    Content.content_url).filter(Content.topic_id == '1').all()
 
-    return jsonify(topic_id=topic_id, curric_items=curric_items)
+    return jsonify({'data': curric_items})
 
 
 @app.route('/curriculum/<int:topic_id>/add-content')
