@@ -110,6 +110,8 @@ def create_content():
 
     return redirect('/curriculum/%s' % new_content.topic_id)
 
+#@app.route('/users/:user_id/contents/<int: content_id>', methods=["GET","POST"])
+
 
 @app.route('/create-topic')
 def create_topic():

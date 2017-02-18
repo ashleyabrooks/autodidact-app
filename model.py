@@ -37,6 +37,7 @@ class Topic(db.Model):
     topic_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     topic_name = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
+    #content_order = db.Column(db.)
 
     user = db.relationship('User', backref=db.backref('users'))
 

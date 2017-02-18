@@ -1,25 +1,8 @@
 'use strict';
 
 var AutodidactApp = React.createClass({
-
-    getInitialState: function() {
-        return {
-            topics: []
-        }
-    },
-
-    componentDidMount: function() {
-        $.getJSON('/topics.json').done(function(response) {
-            this.setState({topics: response.data});
-        }.bind(this));
-        $.getJSON('/curriculum.json').done(function(response) {
-            this.setState({content: response.data});
-        }.bind(this));
-    },
-
+    
     render: function() {
-        // ensure AJAX call is successful before loading components
-        if (this.state.content && this.state.topics)
             return (
                 <div>
                     <nav className="navbar navbar-default" role="navigation">
@@ -36,7 +19,7 @@ var AutodidactApp = React.createClass({
                                     </ReactRouter.Link>
                                 </li>
                                 <li>
-                                    <ReactRouter.Link to="/curriculum-content">
+                                    <ReactRouter.Link to="/topics/curriculum-content">
                                         Curriculum Content 
                                     </ReactRouter.Link>
                                 </li>
@@ -48,24 +31,18 @@ var AutodidactApp = React.createClass({
                             </ul>
                         </div>
                     </nav>
-                    <div>
-                        <TopicsList topics={this.state.topics}/>
-                        <CurriculumContent content={this.state.content}/>
-                    </div>
                 </div>
             );
-        return (<div>Loading...</div>);
     },
 
 });
 
 
 ReactDOM.render(
-    <ReactRouter.Router history={ ReactRouter.browserHistory }>
-        <ReactRouter.Route path="/" component={ AutodidactApp }>
+    <ReactRouter.Router history={ ReactRouter.hashHistory }>
+        <ReactRouter.Route path="/" component={ AutodidactApp }/>
             <ReactRouter.Route path="/topics" component={ Topics }/>
-            <ReactRouter.Route path="/curriculum-content" component={ CurriculumContent }/>
-        </ReactRouter.Route>
+            <ReactRouter.Route path="/topics/curriculum-content" component={ CurriculumContent }/>
     </ReactRouter.Router>,
 
     document.getElementById('app')

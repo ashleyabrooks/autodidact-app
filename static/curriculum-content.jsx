@@ -2,9 +2,29 @@
 
 var CurriculumContent = React.createClass({
 
+    getInitialState: function() {
+        return {
+            content: []
+        }
+    },
+
+    componentDidMount: function() {
+        $.getJSON('/curriculum.json').done(function(response) {
+            this.setState({content: response.data});
+        }.bind(this));
+    },
+
     render: function() {
+        if (this.state.content)
+            return (
+                <div>
+                    <ContentList content={this.state.content} />
+                </div>
+            );
         return (
-            <ContentList content={this.props.content} />
+            <div>
+                Add content to create a curriculum.
+            </div>
         );
     }
 });

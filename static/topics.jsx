@@ -1,11 +1,27 @@
 'use strict';
 
 var Topics = React.createClass({
+
+    getInitialState: function() {
+        return {
+            topics: []
+        }
+    },
+
+    componentWillMount: function() {
+
+        $.getJSON('/topics.json').done(function(response) {
+            this.setState({topics: response.data});
+        }.bind(this));
+    },
+
     render: function() {
+
         if (this.state.topics)
             return (
                 <div>
-                    Topics List: <TopicsList topics={this.props.topics}/>
+                    <AddContentButton cta='Add Topic'/>
+                    <TopicsList topics={this.state.topics}/>
                 </div>
             );
         return (
@@ -15,7 +31,6 @@ var Topics = React.createClass({
         );
     }
 });
-
 
 var TopicsList = React.createClass({
 
@@ -35,15 +50,48 @@ var TopicsList = React.createClass({
 });
 
 var TopicItem = React.createClass({
+
+    // setCurrentTopic: function() {
+    //     this.setState({
+    //         currentTopic: 
+    //     })
+    // },
+
     render: function() {
         return (
             <div>
-                <ReactRouter.Link to='/topics/:{this.props.topic_id}/curriculum-content'>
+                <ReactRouter.Link to='/topics/curriculum-content'>
                     {this.props.topic}
                 </ReactRouter.Link>
             </div> 
         );
     }
+});
+
+var CurrentTopic = React.createClass({
+    render: function() {
+        //pass
+    }
+});
+
+
+var AddContentButton = React.createClass({
+    
+    addNewTopic: function() {
+        $.post('/add-topic', data, function() {
+            // SUCCESS FUNCTION
+            console.log('Added new topic')
+        })
+    },
+
+    render: function() {
+        return (
+            
+            <ReactRouter.Link to='/add-topic'>
+                <button type='button' onClick={ this.addNewTopic }>{this.props.cta}</button>
+            </ReactRouter.Link>
+        );
+    },
 });
 
 
