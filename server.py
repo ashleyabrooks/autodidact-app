@@ -79,7 +79,7 @@ def show_curriculum(): #this used to take in topic_id as an argument in order to
     """Display curriculum page from topic specified in the URL."""
 
     curric_items = db.session.query(Content.content_title,
-                                    Content.content_url).filter(Content.topic_id == '1').all()
+                                    Content.content_url).filter(Content.topic_id == topic_id).all()
 
     return jsonify({'data': curric_items})
 

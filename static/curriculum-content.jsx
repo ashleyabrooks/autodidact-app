@@ -9,7 +9,7 @@ var CurriculumContent = React.createClass({
     },
 
     componentDidMount: function() {
-        $.getJSON('/curriculum.json').done(function(response) {
+        $.getJSON('/curriculum.json', {topic_id: this.props.params.topic_id}).done(function(response) {
             this.setState({content: response.data});
         }.bind(this));
     },

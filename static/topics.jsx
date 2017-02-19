@@ -4,7 +4,8 @@ var Topics = React.createClass({
 
     getInitialState: function() {
         return {
-            topics: []
+            topics: [],
+            currentTopic: ""
         }
     },
 
@@ -20,13 +21,14 @@ var Topics = React.createClass({
         if (this.state.topics)
             return (
                 <div>
-                    <AddContentButton cta='Add Topic'/>
+                    <AddContentButton cta='Add New Topic'/>
                     <TopicsList topics={this.state.topics}/>
                 </div>
             );
         return (
             <div>
-                Add a topic to get started.
+                Create a topic to get started.
+                <AddContentButton cta='Create New Topic'/>
             </div>
         );
     }
@@ -36,7 +38,9 @@ var TopicsList = React.createClass({
 
     render: function() {
         var topicsList = this.props.topics.map(function(result) {
-            return(<TopicItem key={result[1]} topic={result[0]} topic_id={result[1]}/>);
+            return (
+                <TopicItem key={result[1]} topic={result[0]} topic_id={result[1]}/>
+            );
         })
         
         return (
@@ -51,19 +55,13 @@ var TopicsList = React.createClass({
 
 var TopicItem = React.createClass({
 
-    // setCurrentTopic: function() {
-    //     this.setState({
-    //         currentTopic: 
-    //     })
-    // },
-
     render: function() {
         return (
             <div>
-                <ReactRouter.Link to='/topics/curriculum-content'>
+                <ReactRouter.Link to={{ pathname: '/topic/:content', query: { topic_id: this.props.topic_id } }} activeClassName="active">
                     {this.props.topic}
                 </ReactRouter.Link>
-            </div> 
+            </div>
         );
     }
 });

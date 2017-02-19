@@ -19,11 +19,6 @@ var AutodidactApp = React.createClass({
                                     </ReactRouter.Link>
                                 </li>
                                 <li>
-                                    <ReactRouter.Link to="/topics/curriculum-content">
-                                        Curriculum Content 
-                                    </ReactRouter.Link>
-                                </li>
-                                <li>
                                     <ReactRouter.Link to='/login'>
                                         Login 
                                     </ReactRouter.Link>
@@ -31,6 +26,7 @@ var AutodidactApp = React.createClass({
                             </ul>
                         </div>
                     </nav>
+                    {this.props.children}
                 </div>
             );
     },
@@ -40,9 +36,10 @@ var AutodidactApp = React.createClass({
 
 ReactDOM.render(
     <ReactRouter.Router history={ ReactRouter.hashHistory }>
-        <ReactRouter.Route path="/" component={ AutodidactApp }/>
+        <ReactRouter.Route path="/" component={ AutodidactApp }>
             <ReactRouter.Route path="/topics" component={ Topics }/>
-            <ReactRouter.Route path="/topics/curriculum-content" component={ CurriculumContent }/>
+            <ReactRouter.Route path="/topic/:content" component={ CurriculumContent }/>
+        </ReactRouter.Route>
     </ReactRouter.Router>,
 
     document.getElementById('app')
