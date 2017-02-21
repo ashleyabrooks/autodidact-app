@@ -20,7 +20,7 @@ var AutodidactApp = React.createClass({
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                           </button>
-                          <ReactRouter.Link to='/#' className="navbar-brand">Autodidact</ReactRouter.Link>
+                          <ReactRouter.Link to='/' className="navbar-brand">Autodidact</ReactRouter.Link>
                         </div>
 
                         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -95,6 +95,7 @@ var AuthenticationButton = React.createClass({
 ReactDOM.render(
     <ReactRouter.Router history={ ReactRouter.hashHistory }>
         <ReactRouter.Route path="/" component={ AutodidactApp }>
+            <ReactRouter.Route path='/homepage' component={ Homepage } />
             <ReactRouter.Route path="/topics" component={ Topics }/>
             <ReactRouter.Route path="/topics/content" component={ CurriculumContent }/>
             <ReactRouter.Route path="/login" component={ LoginPage }/>

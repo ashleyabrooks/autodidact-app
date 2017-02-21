@@ -1,4 +1,5 @@
 import sqlalchemy
+from sqlalchemy import update
 from jinja2 import StrictUndefined
 from flask import (Flask, jsonify, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
@@ -61,12 +62,6 @@ def show_topic_overview():
     return jsonify({'data': topics})
 
 
-@app.route('/add-topic')
-def add_new_topic():
-    """Display add-topic page."""
-
-    return render_template('add-topic.html')
-
 @app.route('/curriculum.json', methods=['POST'])
 def show_curriculum(): #this used to take in topic_id as an argument in order to get curriculum for specific topic
     """Display curriculum page from topic specified in the URL."""
@@ -75,26 +70,21 @@ def show_curriculum(): #this used to take in topic_id as an argument in order to
 
     curric_items = db.session.query(Content.content_title,
                                     Content.content_url,
-                                    Content.content_id).filter(Content.topic_id == topic_id).all()
+                                    Content.content_id,
+                                    Content.content_type,
+                                    Content.topic_id).filter(Content.topic_id == topic_id).all()
 
     return jsonify({'data': curric_items})
 
 
-@app.route('/curriculum/<int:topic_id>/add-content')
-def add_content(topic_id):
-    """Display add-content page."""
-
-    return render_template('add-content.html', topic_id=topic_id)
-
-
-@app.route('/create-content')
+@app.route('/create-content', methods=['POST'])
 def create_content():
     """Add content to user's curriculum."""
 
-    content_title = request.args.get('content_title')
-    content_url = request.args.get('content_url')
-    content_type = request.args.get('content_type')
-    topic_id = request.args.get('topic_id')
+    content_title = request.form.get('content_title')
+    content_url = request.form.get('content_url')
+    content_type = request.form.get('content_type')
+    topic_id = request.form.get('topic_id')
 
     new_content = Content(content_type=content_type, content_title=content_title, 
                                               topic_id=topic_id, 
@@ -104,22 +94,40 @@ def create_content():
     db.session.add(new_content)
     db.session.commit()
 
-    return redirect('/#/topics')
+    return redirect('/#/topics/content?topic_id=%s' % topic_id)
 
-#@app.route('/users/:user_id/contents/<int: content_id>', methods=["GET","POST"])
+@app.route('/edit-content', methods=['POST'])
+def edit_content():
+    """Edit content with user's input from Edit Content Modal Component."""
+
+    content_id = request.form.get('content_id')
+    content_title = request.form.get('new_content_title')
+    content_url = request.form.get('new_content_url')
+    topic_id = request.form.get('topic_id')
+
+    content_update = db.session.query(Content).filter(Content.content_id==content_id).one()
+
+    content_update.content_title = content_title
+    content_update.content_url = content_url
+
+    db.session.commit()
+
+    return redirect('/#/topics/content?topic_id=%s' % topic_id)
 
 
-@app.route('/create-topic')
+@app.route('/create-topic', methods=['POST'])
 def create_topic():
 
-    topic_name = request.args.get('new-topic-name')
+    topic_name = request.form.get('newTopic')
 
     new_topic = Topic(topic_name=topic_name, user_id=session['user'])
 
     db.session.add(new_topic)
     db.session.commit()
 
-    return redirect('/#/topics')
+    topic_id = db.session.query(Topic.topic_id).filter(Topic.topic_name == topic_name).one().topic_id
+
+    return redirect('/#/topics/content?topic_id=%s' % topic_id)
 
 
 @app.route('/save-order', methods=['POST'])
@@ -137,7 +145,6 @@ def get_curric_order():
 if __name__ == "__main__":
     app.debug = True
 
-    # Ensure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug  
 
     connect_to_db(app)

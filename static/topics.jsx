@@ -99,25 +99,36 @@ var AddContentButton = React.createClass({
 
 var NewTopicTextField = React.createClass({
 
-    // addNewTopic: function() {
+    addNewTopic: function(e) {
+        e.preventDefault();
 
-    //     var newTopicInput = {
-    //         'newTopic': $('#new-topic-name').val()
-    //     };
+        var newTopicInput = {
+            'newTopic': $('#new-topic-name').val()
+        };
 
-    //     console.log(newTopicInput);
+        console.log(newTopicInput.newTopic);
 
-    //     $.post('/create-topic', newTopicInput, function() {
-    //         // SUCCESS FUNCTION
-    //         console.log('Added new topic')
-    //     })
+        $.post('/create-topic', newTopicInput, function() {
+            // SUCCESS FUNCTION - see if you can redirect to /topics/content?topic_id=X
+            //this.handleRedirect
+            this.props.router.push('/#/topics/content?topic_id=' + topic_id);
+            console.log('Added new topic')
+        })
+    },
+
+    // handleRedirect: function(response) {
+    //     if ( response.status === 200 ){
+    //         window.location.href = '';
+    //         }else {
+    //           // Something went wrong here
+    //         }
     // },
 
     render: function() {
         return (
             <div>
-                <form action='/create-topic'>
-                    <input type='text' name='new-topic-name' />
+                <form>
+                    <input type='text' id='new-topic-name' />
                     <input type='submit' name='submit-new-topic' onClick={ this.addNewTopic }/>
                 </form>
             </div>
