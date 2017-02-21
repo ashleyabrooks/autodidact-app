@@ -17,12 +17,6 @@ def homepage():
     return render_template('index.html')
 
 
-@app.route('/login')
-def login():
-    """Show login page."""
-
-    return render_template('login.html')
-
 @app.route('/handle-login', methods=['POST'])
 def handle_login():
     """Handle login and redirect to curriculum overview page if accepted."""
@@ -37,33 +31,32 @@ def handle_login():
         user = db.session.query(User).filter(User.email == entered_email).one()
         if entered_pw == user.password:
             session['user'] = user.user_id
-            return redirect('/topics')
+            return redirect('/#/topics')
         else:
             flash('Incorrect username or password.')
-            return redirect('/login')
+            return redirect('/#/login')
     elif request.form.get('create-account'):
         user = User(email=entered_email, password=entered_pw, first_name='Test', last_name='Test')
         db.session.add(user)
         db.session.commit()
-        return redirect('/topics')
+        flash('New account created')
+        return redirect('/#/topics')
 
 
 @app.route('/logout')
 def handle_logout():
     del session['user']
     flash('You have been logged out.')
-    return redirect('/')
+    print 'logged out'
+    return redirect('/#/')
 
 
 @app.route('/topics.json')
 def show_topic_overview():
     """Display topic overview page."""
 
-    # topics = db.session.query(Topic.topic_name, 
-    #                           Topic.topic_id).filter(Topic.user_id == session['user']).all()
-
-    topics = db.session.query(Topic.topic_name,
-                              Topic.topic_id).filter(Topic.user_id == '1').all()
+    topics = db.session.query(Topic.topic_name, 
+                              Topic.topic_id).filter(Topic.user_id == session['user']).all()
 
     return jsonify({'data': topics})
 
@@ -74,12 +67,15 @@ def add_new_topic():
 
     return render_template('add-topic.html')
 
-@app.route('/curriculum.json')
+@app.route('/curriculum.json', methods=['POST'])
 def show_curriculum(): #this used to take in topic_id as an argument in order to get curriculum for specific topic
     """Display curriculum page from topic specified in the URL."""
 
+    topic_id = request.form.get("data")
+
     curric_items = db.session.query(Content.content_title,
-                                    Content.content_url).filter(Content.topic_id == topic_id).all()
+                                    Content.content_url,
+                                    Content.content_id).filter(Content.topic_id == topic_id).all()
 
     return jsonify({'data': curric_items})
 
@@ -108,7 +104,7 @@ def create_content():
     db.session.add(new_content)
     db.session.commit()
 
-    return redirect('/curriculum/%s' % new_content.topic_id)
+    return redirect('/#/topics')
 
 #@app.route('/users/:user_id/contents/<int: content_id>', methods=["GET","POST"])
 
@@ -116,14 +112,14 @@ def create_content():
 @app.route('/create-topic')
 def create_topic():
 
-    topic_name = request.args.get('topic_name')
+    topic_name = request.args.get('new-topic-name')
 
     new_topic = Topic(topic_name=topic_name, user_id=session['user'])
 
     db.session.add(new_topic)
     db.session.commit()
 
-    return redirect('/topics')
+    return redirect('/#/topics')
 
 
 @app.route('/save-order', methods=['POST'])

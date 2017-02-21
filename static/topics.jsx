@@ -58,7 +58,7 @@ var TopicItem = React.createClass({
     render: function() {
         return (
             <div>
-                <ReactRouter.Link to={{ pathname: '/topic/:content', query: { topic_id: this.props.topic_id } }} activeClassName="active">
+                <ReactRouter.Link to={{ pathname: '/topics/content', query: { topic_id: this.props.topic_id } }}>
                     {this.props.topic}
                 </ReactRouter.Link>
             </div>
@@ -74,22 +74,55 @@ var CurrentTopic = React.createClass({
 
 
 var AddContentButton = React.createClass({
-    
-    addNewTopic: function() {
-        $.post('/add-topic', data, function() {
-            // SUCCESS FUNCTION
-            console.log('Added new topic')
-        })
+
+    getInitialState: function() {
+        return {
+            showTextField: false
+        };
+    },
+
+    showTextField: function() {
+        this.setState({
+            showTextField: true
+        });
     },
 
     render: function() {
         return (
-            
-            <ReactRouter.Link to='/add-topic'>
-                <button type='button' onClick={ this.addNewTopic }>{this.props.cta}</button>
-            </ReactRouter.Link>
+            <div>
+                <button type='button' onClick={ this.showTextField }>{this.props.cta}</button>
+                { this.state.showTextField ? <NewTopicTextField /> : null }
+            </div>
         );
     },
+});
+
+var NewTopicTextField = React.createClass({
+
+    // addNewTopic: function() {
+
+    //     var newTopicInput = {
+    //         'newTopic': $('#new-topic-name').val()
+    //     };
+
+    //     console.log(newTopicInput);
+
+    //     $.post('/create-topic', newTopicInput, function() {
+    //         // SUCCESS FUNCTION
+    //         console.log('Added new topic')
+    //     })
+    // },
+
+    render: function() {
+        return (
+            <div>
+                <form action='/create-topic'>
+                    <input type='text' name='new-topic-name' />
+                    <input type='submit' name='submit-new-topic' onClick={ this.addNewTopic }/>
+                </form>
+            </div>
+        );
+    }
 });
 
 
