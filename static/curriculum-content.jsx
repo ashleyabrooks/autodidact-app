@@ -101,6 +101,8 @@ var ContentItem = React.createClass({
     }
 });
 
+
+
 var EditContentModal = React.createClass({
 
     submitEdit: function(e) {
@@ -116,7 +118,7 @@ var EditContentModal = React.createClass({
         console.log(editContentInput);
 
         $.post('/edit-content', editContentInput, function() {
-            ContentList.forceUpdate()
+            console.log('edited content')
         })
     },
 
@@ -157,17 +159,17 @@ var AddContentToCurricButton = React.createClass({
         e.preventDefault();
 
         var newContent = {
-            'content_title': $('#content-title').val(),
-            'content_url': $('#content-url').val(),
-            'content_type': $('#content-type').val(),
-            'topic_id': $('#topic-id').val()
+            'content_title': $('#content-title-create').val(),
+            'content_url': $('#content-url-create').val(),
+            'content_type': $('#content-type-create').val(),
+            'topic_id': $('#topic-id-create').val(),
         };
 
         console.log(newContent);
 
         $.post('/create-content', newContent, function() {
-            ContentList.forceUpdate()
-        })
+            console.log('added content');
+        });
     },
 
     render: function() {
@@ -186,18 +188,18 @@ var AddContentToCurricButton = React.createClass({
                       </div>
                       <div className="modal-body">
                             <form>
-                                Content Title: <input type='text' name='content_title' id='content-title' /><br/><br/>
-                                Content URL: www.<input type='text' name='content_url' id='content-url' /><br/><br/>
+                                Content Title: <input type='text' name='content_title' id='content-title-create' /><br/><br/>
+                                Content URL: www.<input type='text' name='content_url' id='content-url-create' /><br/><br/>
                                 Content Type:<br/>
-                                    Article <input type='radio' name='content_type' value='article' id='content-type'/>
-                                    Video <input type='radio' name='content_type' value='video' id='content-type'/>
-                                    Book <input type='radio' name='content_type' value='book' id='content-type'/>
-                                    Note <input type='radio' name='content_type' value='note' id='content-type'/>
-                                <input type='hidden' name='topic_id' value={this.props.topic_id} id='topic-id' />
+                                    Article <input type='radio' name='content_type' value='article' id='content-type-create'/>
+                                    Video <input type='radio' name='content_type' value='video' id='content-type-create'/>
+                                    Book <input type='radio' name='content_type' value='book' id='content-type-create'/>
+                                    Note <input type='radio' name='content_type' value='note' id='content-type-create'/>
+                                <input type='hidden' name='topic_id' value={this.props.topic_id} id='topic-id-create'/>
 
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                                    <input type="submit" className="btn btn-primary" value='Add to Curriculum' onClick={this.addContentToCurric} />
+                                    <input type="submit" className="btn btn-primary" data-dismiss="modal" value='Add to Curriculum' onClick={this.addContentToCurric} />
                                 </div>
                             </form>
                       </div>

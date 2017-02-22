@@ -77,22 +77,31 @@ def show_curriculum(): #this used to take in topic_id as an argument in order to
     return jsonify({'data': curric_items})
 
 
-@app.route('/create-content', methods=['POST'])
+@app.route('/create-content', methods=["POST"])
 def create_content():
     """Add content to user's curriculum."""
+
+    print 'in route'
 
     content_title = request.form.get('content_title')
     content_url = request.form.get('content_url')
     content_type = request.form.get('content_type')
     topic_id = request.form.get('topic_id')
 
+    # content_title = request.args.get('content_title')
+    # content_url = request.args.get('content_url')
+    # content_type = request.args.get('content_type')
+    # topic_id = request.args.get('topic_id')
+
     new_content = Content(content_type=content_type, content_title=content_title, 
                                               topic_id=topic_id, 
                                               user_id=session['user'],
                                               content_url=content_url)
 
-    db.session.add(new_content)
-    db.session.commit()
+    print new_content
+
+    # db.session.add(new_content)
+    # db.session.commit()
 
     return redirect('/#/topics/content?topic_id=%s' % topic_id)
 
