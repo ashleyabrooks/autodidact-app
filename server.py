@@ -100,8 +100,8 @@ def create_content():
 
     print new_content
 
-    # db.session.add(new_content)
-    # db.session.commit()
+    db.session.add(new_content)
+    db.session.commit()
 
     return redirect('/#/topics/content?topic_id=%s' % topic_id)
 
