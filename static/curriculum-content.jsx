@@ -23,7 +23,7 @@ var CurriculumContent = React.createClass({
         }.bind(this));
     },
 
-    render: function() { console.log(this);
+    render: function() {
         if (this.state.content)
             return (
                 <div id='container'>
@@ -40,38 +40,11 @@ var CurriculumContent = React.createClass({
     }
 });
 
-var placeholder = document.createElement('li');
-placeholder.className = 'placeholder';
 
 var ContentList = React.createClass({
 
     getInitialState: function() {
         return {content: this.props.content}
-    },
-
-    dragStart: function(e) {
-        this.dragged = e.currentTarget;
-        e.dataTransfer.effectAllowed = 'move';
-    },
-
-    dragEnd: function(e) {
-
-        // this.dragged.parentNode.removeChild(placeholder);
-
-        // Update state
-        var content = this.state.content;
-        var from = Number(this.dragged.dataset.id);
-        var to = Number(this.over.dataset.id);
-        if(from < to) to--;
-        content.splice(to, 0, content.splice(from, 1)[0]);
-        this.setState({content: content});
-    },
-
-    dragOver: function(e) {
-        e.preventDefault();
-        if(e.target.className == "placeholder") return;
-        this.over = e.target;
-        e.target.parentNode.insertBefore(placeholder, e.target);
     },
 
     render: function() {
@@ -87,8 +60,8 @@ var ContentList = React.createClass({
 
         return (
             <div id='curriculum'>
-                <ul onDragOver={this.dragOver}>
-                    <li draggable='true' onDragEnd={this.dragEnd} onDragStart={this.dragStart}>
+                <ul>
+                    <li draggable='true'>
                         <b>Content:</b> {contentList}
                     </li>
                 </ul>
@@ -123,17 +96,14 @@ var ContentItem = React.createClass({
     
     render: function() {
         return (
-            <div draggable='true' 
-                 onDragEnd={this.dragEnd} 
-                 onDragStart={this.dragStart} 
-                 id={this.props.content_id} 
-                 onMouseEnter={this.showEditButton} 
-                 onMouseLeave={this.hideEditButton}
-                 onClick={this.handleLinkClick}>
-                    
-                    {this.props.content_title}
+            <div id={this.props.content_id} 
+                     onMouseEnter={this.showEditButton} 
+                     onMouseLeave={this.hideEditButton}>
                 
-                    {this.state.showEditButton ? <EditContentModal content_title={this.props.content_title} 
+                <div onClick={this.handleLinkClick}>
+                    {this.props.content_title}
+                </div>
+                {this.state.showEditButton ? <EditContentModal content_title={this.props.content_title} 
                                                                content_url={this.props.url}
                                                                content_type={this.props.content_type}
                                                                topic_id={this.props.topic_id}
@@ -194,8 +164,6 @@ var EditContentModal = React.createClass({
             'topic_id': this.props.topic_id
         };
 
-        console.log(editContentInput);
-
         $.post('/edit-content', editContentInput, function() {
             console.log('edited content')
         })
@@ -248,7 +216,7 @@ var AddContentToCurricButton = React.createClass({
         });
     },
 
-    render: function() { console.log(this.props);
+    render: function() {
         return (
             <div>
                 <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">
