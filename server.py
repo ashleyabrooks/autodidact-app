@@ -88,10 +88,8 @@ def create_content():
     content_type = request.form.get('content_type')
     topic_id = request.form.get('topic_id')
 
-    # content_title = request.args.get('content_title')
-    # content_url = request.args.get('content_url')
-    # content_type = request.args.get('content_type')
-    # topic_id = request.args.get('topic_id')
+    # format content_url before adding to database:
+    content_url = str('http://www.' + content_url)
 
     new_content = Content(content_type=content_type, content_title=content_title, 
                                               topic_id=topic_id, 

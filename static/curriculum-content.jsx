@@ -40,7 +40,39 @@ var CurriculumContent = React.createClass({
     }
 });
 
+var placeholder = document.createElement('li');
+placeholder.className = 'placeholder';
+
 var ContentList = React.createClass({
+
+    getInitialState: function() {
+        return {content: this.props.content}
+    },
+
+    dragStart: function(e) {
+        this.dragged = e.currentTarget;
+        e.dataTransfer.effectAllowed = 'move';
+    },
+
+    dragEnd: function(e) {
+
+        // this.dragged.parentNode.removeChild(placeholder);
+
+        // Update state
+        var content = this.state.content;
+        var from = Number(this.dragged.dataset.id);
+        var to = Number(this.over.dataset.id);
+        if(from < to) to--;
+        content.splice(to, 0, content.splice(from, 1)[0]);
+        this.setState({content: content});
+    },
+
+    dragOver: function(e) {
+        e.preventDefault();
+        if(e.target.className == "placeholder") return;
+        this.over = e.target;
+        e.target.parentNode.insertBefore(placeholder, e.target);
+    },
 
     render: function() {
         var contentList = this.props.content.map(function(result) {
@@ -54,9 +86,11 @@ var ContentList = React.createClass({
         })
 
         return (
-            <div>
-                <ul>
-                    <b>Content:</b> {contentList}
+            <div id='curriculum'>
+                <ul onDragOver={this.dragOver}>
+                    <li draggable='true' onDragEnd={this.dragEnd} onDragStart={this.dragStart}>
+                        <b>Content:</b> {contentList}
+                    </li>
                 </ul>
             </div>
         );
@@ -83,18 +117,23 @@ var ContentItem = React.createClass({
         })
     },
 
-    createContentURL: function() {
-        var formattedURL = 'http://www.' + this.props.url
-        console.log(formattedURL)
+    handleLinkClick: function() {
+        window.open(this.props.url)
     },
     
     render: function() {
         return (
-            <div id={this.props.content_id} onMouseEnter={this.showEditButton} onMouseLeave={this.hideEditButton}>
-                <a href={this.formattedURL} >
+            <div draggable='true' 
+                 onDragEnd={this.dragEnd} 
+                 onDragStart={this.dragStart} 
+                 id={this.props.content_id} 
+                 onMouseEnter={this.showEditButton} 
+                 onMouseLeave={this.hideEditButton}
+                 onClick={this.handleLinkClick}>
+                    
                     {this.props.content_title}
-                </a>
-                {this.state.showEditButton ? <EditContentModal content_title={this.props.content_title} 
+                
+                    {this.state.showEditButton ? <EditContentModal content_title={this.props.content_title} 
                                                                content_url={this.props.url}
                                                                content_type={this.props.content_type}
                                                                topic_id={this.props.topic_id}
