@@ -1,47 +1,51 @@
 import React, {Component} from 'react';
-import AddContentButton from './add-content-button.js'
 import TopicsList from './topics-list.js'
 import $ from 'jquery'
 
 class TopicsPage extends Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.state = {topics: [], currentTopic: '', newTopic: ''};
+    }
 
-    // constructor() {
-    //     super()
-    //     this.state = {
-    //         topics: [],
-    //         currentTopic: ''
-    //     }
-    // }
-
-    // componentWillMount() {
-    //     $.getJSON('http://localhost:5000/topics.json').done(function(response) {
-    //         this.setState({topics: response.data});
-    //     }.bind(this));
-    // }
-
-    // render() {
-
-        // if (this.state.topics)
-        //     return (
-        //         <div>
-        //             <AddContentButton cta='Add New Topic'/>
-        //             <TopicsList topics={this.state.topics}/>
-        //         </div>
-        //     );
-    //     return (
-    //         <div>
-    //             Create a topic to get started.
-    //             <AddContentButton cta='Create New Topic'/>
-    //         </div>
-    //     );
-    // }
+    componentDidMount() {
+        $.getJSON('http://localhost:5000/topics.json').done(function(response) {
+            this.setState({topics: response.data});
+        }.bind(this));
+    }
 
     render() {
         return (
             <div>
-                Topics
+                <form onSubmit={this.handleSubmit}>
+                    <input onChange={this.handleChange} value={this.state.newTopic} />
+                    <button> Create New Topic </button>
+                </form>
+                
+                <h3>Topics:</h3>
+                <TopicsList topics={this.state.topics}/>
             </div>
         );
+    }
+
+    handleChange(e) {
+        this.setState({newTopic: e.target.value});
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        var newTopic = {newTopic: this.state.newTopic};
+
+        $.post('http://localhost:5000/create-topic', newTopic, function() {
+            //this.props.router.push('/#/topics/content?topic_id=' + this.props.topic_id);
+            console.log('Added new topic')
+        });
+        
+        $.getJSON('http://localhost:5000/topics.json').done(function(response) {
+            this.setState({topics: response.data});
+        }.bind(this));
     }
 }
 

@@ -1,24 +1,29 @@
 import React, {Component} from 'react';
 import EditContentModal from './edit-content-modal.js'
 
-
 class ContentItem extends Component {
 
-    getInitialState() {
-        return {
-            showEditButton: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            editMode: false,
+            url: this.props.url
         }
+        this.handleLinkClick = this.handleLinkClick.bind(this);
+        this.showEditButton = this.showEditButton.bind(this);
+        this.hideEditButton = this.hideEditButton.bind(this);
+
     }
 
     showEditButton() {
         this.setState({
-            showEditButton: true
+            editMode: true
         })
     }
 
     hideEditButton() {
         this.setState({
-            showEditButton: false
+            editMode: false
         })
     }
 
@@ -35,7 +40,7 @@ class ContentItem extends Component {
                 <div onClick={this.handleLinkClick}>
                     {this.props.content_title}
                 </div>
-                {this.state.showEditButton ? <EditContentModal content_title={this.props.content_title} 
+                {this.state.editMode ? <EditContentModal content_title={this.props.content_title} 
                                                                content_url={this.props.url}
                                                                content_type={this.props.content_type}
                                                                topic_id={this.props.topic_id}
@@ -43,6 +48,8 @@ class ContentItem extends Component {
             </div>
         );
     }
+
+    
 }
 
 export default ContentItem;

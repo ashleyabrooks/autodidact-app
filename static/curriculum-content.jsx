@@ -14,7 +14,7 @@ var CurriculumContent = React.createClass({
 
         this.setState({topic_id: topic_id})
 
-        dragula([document.getElementById(container)]);
+        // dragula([document.getElementById(container)]);
 
         $.post('/curriculum.json', 
             {data: topic_id})

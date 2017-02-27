@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Router, Route, Link, hashHistory } from 'react-router'
+import { Link } from 'react-router'
 import AuthenticationButton from './auth-button.js'
 // import Homepage from './homepage.js'
-import TopicsPage from './topics-page.js'
-import LoginPage from './login-page.js'
-import Curriculum from './curriculum.js'
-import ReactDOM from 'react-dom'
-
-
 
 
 class App extends Component {
@@ -60,16 +54,6 @@ class App extends Component {
     }
 }
 
-ReactDOM.render(
-    <Router history={ hashHistory }>
-        <Route path="/" component={ App }>
-            <Route path="/topics" component={ TopicsPage }/>
-            <Route path="/topics/content" component={ Curriculum }/>
-            <Route path="/login" component={ LoginPage }/>
-        </Route>
-    </Router>,
 
-    document.getElementById('app')
-);
 
 export default App;

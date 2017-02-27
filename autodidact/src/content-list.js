@@ -3,8 +3,9 @@ import ContentItem from './content-item.js'
 
 class ContentList extends Component {
 
-    getInitialState() {
-        return {content: this.props.content}
+    constructor(props) {
+        super(props)
+        this.state = {content: this.props.content}
     }
 
     render() {
@@ -14,8 +15,8 @@ class ContentList extends Component {
                                  content_title={result[0]} 
                                  url={result[1]} 
                                  content_type={result[3]} 
-                                 topic_id={result[4]}/>
-                    );
+                                 topic_id={result[4]} />
+            );
         })
 
         return (

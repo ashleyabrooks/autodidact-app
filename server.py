@@ -1,4 +1,5 @@
 import sqlalchemy
+import json
 from sqlalchemy import update
 from jinja2 import StrictUndefined
 from flask import (Flask, jsonify, render_template, redirect, request, flash, session)
@@ -67,6 +68,7 @@ def show_topic_overview():
 
 
 @app.route('/curriculum.json', methods=['POST'])
+@cross_origin()
 def show_curriculum(): #this used to take in topic_id as an argument in order to get curriculum for specific topic
     """Display curriculum page from topic specified in the URL."""
 
@@ -82,10 +84,9 @@ def show_curriculum(): #this used to take in topic_id as an argument in order to
 
 
 @app.route('/create-content', methods=["POST"])
+@cross_origin()
 def create_content():
     """Add content to user's curriculum."""
-
-    print 'in route'
 
     content_title = request.form.get('content_title')
     content_url = request.form.get('content_url')
@@ -97,7 +98,7 @@ def create_content():
 
     new_content = Content(content_type=content_type, content_title=content_title, 
                                               topic_id=topic_id, 
-                                              user_id=session['user'],
+                                              user_id=1,
                                               content_url=content_url)
 
     print new_content
@@ -105,9 +106,10 @@ def create_content():
     db.session.add(new_content)
     db.session.commit()
 
-    return redirect('/#/topics/content?topic_id=%s' % topic_id)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/edit-content', methods=['POST'])
+@cross_origin()
 def edit_content():
     """Edit content with user's input from Edit Content Modal Component."""
 
@@ -127,21 +129,21 @@ def edit_content():
 
 
 @app.route('/create-topic', methods=['POST'])
+@cross_origin()
 def create_topic():
 
     topic_name = request.form.get('newTopic')
 
-    new_topic = Topic(topic_name=topic_name, user_id=session['user'])
+    new_topic = Topic(topic_name=topic_name, user_id=1)
 
     db.session.add(new_topic)
     db.session.commit()
 
-    topic_id = db.session.query(Topic.topic_id).filter(Topic.topic_name == topic_name).one().topic_id
-
-    return redirect('/#/topics/content?topic_id=%s' % topic_id)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
 @app.route('/save-order', methods=['POST'])
+@cross_origin()
 def save_curric_order():
     order = request.form.get('order')
 

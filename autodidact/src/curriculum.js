@@ -5,8 +5,9 @@ import AddContentToCurricButton from './add-content-to-curric-button.js'
 
 class Curriculum extends Component {
 
-    getInitialState() {
-        return {
+    constructor() {
+        super()
+        this.state = {
             content: []
         }
     }
@@ -17,9 +18,7 @@ class Curriculum extends Component {
 
         this.setState({topic_id: topic_id})
 
-        // dragula([document.getElementById(container)]);
-
-        $.post('/curriculum.json', 
+        $.post('http://localhost:5000/curriculum.json', 
             {data: topic_id})
             .done(function(response) {
                 this.setState({content: response.data});
