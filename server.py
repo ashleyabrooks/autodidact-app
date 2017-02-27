@@ -3,6 +3,7 @@ from sqlalchemy import update
 from jinja2 import StrictUndefined
 from flask import (Flask, jsonify, render_template, redirect, request, flash, session)
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_cors import CORS, cross_origin
 from model import User, Content, Topic, connect_to_db, db 
 
 app = Flask(__name__)
@@ -10,12 +11,14 @@ app = Flask(__name__)
 app.secret_key = 'ABC'
 
 app.jinja_env.undefined = StrictUndefined
+CORS(app)
 
-@app.route('/')
-def homepage():
-    """Show homepage."""
 
-    return render_template('index.html')
+# @app.route('/')
+# def homepage():
+#     """Show homepage."""
+
+#     return render_template('index.html')
 
 
 @app.route('/handle-login', methods=['POST'])
@@ -53,11 +56,12 @@ def handle_logout():
 
 
 @app.route('/topics.json')
+@cross_origin()
 def show_topic_overview():
     """Display topic overview page."""
 
     topics = db.session.query(Topic.topic_name, 
-                              Topic.topic_id).filter(Topic.user_id == session['user']).all()
+                              Topic.topic_id).filter(Topic.user_id == 1).all()
 
     return jsonify({'data': topics})
 
