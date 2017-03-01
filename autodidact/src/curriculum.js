@@ -8,8 +8,9 @@ class Curriculum extends Component {
     constructor() {
         super()
         this.state = {
-            content: []
-        }
+            content: [],
+            checkboxes: [],
+        };
     }
 
     componentDidMount() {
@@ -28,15 +29,17 @@ class Curriculum extends Component {
     render() {
         if (this.state.content)
             return (
-                <div id='container'>
+                <div>
                     <ContentList content={this.state.content} />
                     <AddContentToCurricButton topic_id={this.state.topic_id}/>
+                    {this.props.children}
                 </div>
             );
         return (
             <div>
                 Add content to create a curriculum.
                 <AddContentToCurricButton topic_id={this.state.topic_id}/>
+                {this.props.children}
             </div>
         );
     }

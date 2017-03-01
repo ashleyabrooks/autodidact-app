@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Modal, Header, Body } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 
 class AddContentToCurricButton extends Component {
 
@@ -68,33 +68,5 @@ class AddContentToCurricButton extends Component {
         );
     }
 }
-
-
-
-            //     <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-content-modal">
-            //       Add Content to Curriculum
-            //     </button>
-
-            //     <div className="modal fade" id="add-content-modal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
-            //       <div className="modal-dialog" role="document">
-            //         <div className="modal-content">
-            //           <div className="modal-header">
-            //             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            //             <h4 className="modal-title" id="myModalLabel">Add New Content</h4>
-            //           </div>
-            //           <div className="modal-body">
-                            
-
-            //                     <div className="modal-footer">
-            //                         <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-            //                         <input type="submit" className="btn btn-primary" data-dismiss="modal" value='Add to Curriculum' onClick={this.addContentToCurric} />
-            //                     </div>
-            //                 </form>
-            //           </div>
-                      
-            //         </div>
-            //       </div>
-            //     </div>
-            // </div>
 
 export default AddContentToCurricButton;

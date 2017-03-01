@@ -139,7 +139,17 @@ def create_topic():
     db.session.add(new_topic)
     db.session.commit()
 
+    return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+
+
+@app.route('/mark-complete', methods=['POST'])
+@cross_origin()
+def mark_complete():
+
+    content_id = request.form.get('data')
+
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
 
 
 @app.route('/save-order', methods=['POST'])
