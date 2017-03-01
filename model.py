@@ -60,6 +60,7 @@ class Content(db.Model):
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.topic_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
     content_url = db.Column(db.String(300), nullable=False)
+    completed = db.Column(db.Boolean, nullable=False, default='false')
 
     topic = db.relationship('Topic', backref=db.backref('topics'))
     user = db.relationship('User')

@@ -148,6 +148,11 @@ def mark_complete():
 
     content_id = request.form.get('data')
 
+    content_to_mark_complete = db.session.query(Content).filter(Content.content_id==content_id).one()
+    content_to_mark_complete.completed = 'true'
+
+    db.session.commit()
+
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 
