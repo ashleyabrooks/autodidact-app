@@ -10,19 +10,29 @@ body {
     font-size: 12px;
     line-height: 12px;
     height: 12px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
+    margin-top: 0px;
+    padding: 0px;
     text-align: center;
     width: 12px;
+    padding-right: 10px;
 }
 
 #content-item {
-    width: 300px;
+    /*width: 200px;*/
+    display: inline-block;
 }
 
-#checkbox-div {
+#checkbox-span {
   padding: 0;
   width: 15px;
   margin-right: 20px;
+  border: 0;
+/*  margin-top: 0px;
+  margin-bottom: 0px;*/
+  display: inline-block;
+}
+
+#edit-content-button {
+  display: inline-block;
+  padding-left: 10px;
 }

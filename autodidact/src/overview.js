@@ -26,9 +26,9 @@ class Overview extends Component {
             return (
                 <div>
                     <h3>Progress:</h3><br/>
-                        Completed: {this.state.completedContent}
+                        <b>Completed # of Items:</b> {this.state.completedContent}
                         <br/>
-                        Active: {this.state.activeContent}
+                        <b>Active # of Items:</b> {this.state.activeContent}
                         
                 </div>
             );

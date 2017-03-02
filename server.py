@@ -100,13 +100,35 @@ def show_topic_overview():
 def show_curriculum(): #this used to take in topic_id as an argument in order to get curriculum for specific topic
     """Display curriculum page from topic specified in the URL."""
 
-    topic_id = request.form.get("data")
 
-    curric_items = db.session.query(Content.content_title,
+    topic_id = request.form.get('topic_id')
+    content_view_status = request.form.get('content_status')
+
+    print topic_id, content_view_status
+
+    if content_view_status == '/topics/content/active':
+        curric_items = db.session.query(Content.content_title,
+                                    Content.content_url,
+                                    Content.content_id,
+                                    Content.content_type,
+                                    Content.topic_id).filter(Content.topic_id == topic_id).filter(Content.completed == 'false').all()
+        # return curric_items
+
+    elif content_view_status == '/topics/content/all':
+        curric_items = db.session.query(Content.content_title,
                                     Content.content_url,
                                     Content.content_id,
                                     Content.content_type,
                                     Content.topic_id).filter(Content.topic_id == topic_id).all()
+        # return curric_items
+
+    elif content_view_status == '/topics/content/completed':
+        curric_items = db.session.query(Content.content_title,
+                                    Content.content_url,
+                                    Content.content_id,
+                                    Content.content_type,
+                                    Content.topic_id).filter(Content.topic_id == topic_id).filter(Content.completed == 'true').all()
+        # return curric_items
 
     return jsonify({'data': curric_items})
 

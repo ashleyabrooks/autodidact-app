@@ -4,7 +4,7 @@ import $ from 'jquery'
 import AddContentToCurricButton from './add-content-to-curric-button.js'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
 class Curriculum extends Component {
 
@@ -15,19 +15,29 @@ class Curriculum extends Component {
             checkboxes: [],
             currentView: ''
         };
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
 
         var topic_id = this.props.location.query.topic_id
+        var content_status = this.props.location.pathname
 
-        this.setState({topic_id: topic_id})
+        var data_to_send = 
+                {'topic_id': topic_id, 
+                'content_status': content_status};
 
-        $.post('http://localhost:5000/curriculum.json', 
-            {data: topic_id})
-            .done(function(response) {
-                this.setState({content: response.data});
-        }.bind(this));
+        this.setState({topic_id: topic_id,
+                       content_status: content_status})
+
+        $.post('http://localhost:5000/curriculum.json', data_to_send).done(response =>
+            this.setState({content: response.data}), function() {}.bind(this));
+    }
+
+    handleClick() {
+        this.setState({content_status: this.props.location.pathname})
+        console.log(this.state.content_status)
     }
 
     render() {
@@ -35,21 +45,21 @@ class Curriculum extends Component {
             return (
                 <div>
                 <ul className="nav nav-tabs">
-                    <li role="presentation" className="active"><Link to='/topics/content/all'>All</Link></li>
-                    <li role="presentation"><Link to='/topics/content/active'>Active</Link></li>
-                    <li role="presentation"><Link to='/topics/content/completed'>Completed</Link></li>
+                    <li role="presentation" ><Link to={{ pathname: '/topics/content/all?topic_id=2', query: { topic_id: this.props.topic_id } }} onClick={this.handleClick}>All</Link></li>
+                    <li role="presentation" className="active"><Link to={{ pathname: '/topics/content/active?topic_id=2', query: { topic_id: this.props.topic_id } }} onClick={this.handleClick}>Active</Link></li>
+                    <li role="presentation"><Link to={{ pathname: '/topics/content/completed?topic_id=2', query: { topic_id: this.props.topic_id } }} onClick={this.handleClick}>Completed</Link></li>
                 </ul>
                     <AddContentToCurricButton topic_id={this.state.topic_id}/>
                     <ContentList content={this.state.content} />
                     
-                    {this.props.children}
+                    
                 </div>
             );
         return (
             <div>
                 Add content to create a curriculum.
                 <AddContentToCurricButton topic_id={this.state.topic_id}/>
-                {this.props.children}
+                
             </div>
         );
     }

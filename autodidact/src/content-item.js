@@ -38,24 +38,26 @@ class ContentItem extends Component {
 
     render() {
         return (
-            <div id={this.props.content_id} 
+            <div id='content-item-div'
                      onMouseEnter={this.showEditButton} 
                      onMouseLeave={this.hideEditButton}>
 
-                <div id='checkbox-div'>
+                <span id='checkbox-span'>
                     <button className='checkbox' onClick={() => { this.props.onClick(this.props.content_id) }}>
                     </button>
-                </div>
+                </span>
 
 
-                <div id='content-item' onClick={this.handleLinkClick}>
+                <span id='content-item' onClick={this.handleLinkClick}>
                     {this.props.content_title}
-                </div>
-                {this.state.editMode ? <EditContentModal content_title={this.props.content_title} 
+                </span>
+                <span id='edit-content-button'>
+                    {this.state.editMode ? <EditContentModal content_title={this.props.content_title} 
                                                                content_url={this.props.url}
                                                                content_type={this.props.content_type}
                                                                topic_id={this.props.topic_id}
                                                                content_id={this.props.content_id} /> : null}
+                </span>
             </div>
         );
     }

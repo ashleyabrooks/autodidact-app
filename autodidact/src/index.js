@@ -16,9 +16,10 @@ ReactDOM.render((
             <Route path='/overview' component={ Overview } />
             <Route path="/topics" component={ TopicsPage } />
             <Route path="/topics/content" component={ Curriculum }>
-                <Route path='/topics/content/all' component={Curriculum} />
-                <Route path='/topics/content/active' component={Curriculum} />
-                <Route path='/topics/content/completed' component={Curriculum} />
+                <Route path='/topics/content/all?topic_id=2' component={Curriculum} />
+                <Route path='/topics/content/active?topic_id=2' component={Curriculum} />
+                <Route path='/topics/content/completed?topic_id=2' component={Curriculum} />
+                // <Route path='/topics/content/:content_status' component={Curriculum} />
             </Route>
             <Route path="/login" component={ LoginPage } />
         </Route>
