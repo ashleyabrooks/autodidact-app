@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import { Link } from 'react-router'
 import AuthenticationButton from './auth-button.js'
-// import Homepage from './homepage.js'
 
 
 class App extends Component {
@@ -31,7 +30,8 @@ class App extends Component {
 
                       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
-                          <li className="active"><Link to="/topics">Topics <span className="sr-only">(current)</span></Link></li>
+                          <li><Link to='/overview'> Overview </Link></li>
+                          <li><Link to="/topics">Topics <span className="sr-only">(current)</span></Link></li>
                         </ul>
 
                         <ul className="nav navbar-nav navbar-right">

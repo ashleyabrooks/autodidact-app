@@ -5,7 +5,6 @@ class TopicsList extends Component {
 
     render() {
         var topics = this.props.topics.map(function(result) {
-            console.log(result)
             return (
                 <TopicItem key={result.id} topic={result[0]} topic_id={result[1]}/>
             );

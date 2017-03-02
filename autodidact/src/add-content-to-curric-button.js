@@ -28,14 +28,9 @@ class AddContentToCurricButton extends Component {
     addContentToCurric(e) {
         e.preventDefault();
 
-        var newContent = {
-            'content_title': $('#content-title-create').val(),
-            'content_url': $('#content-url-create').val(),
-            'content_type': $('#content-type-create').val(),
-            'topic_id': this.props.topic_id,
-        };
+        var newContentData = $('#newContentForm').serializeArray()
 
-        $.post('http://localhost:5000/create-content', newContent, this.close_modal);
+        $.post('http://localhost:5000/create-content', newContentData, this.close_modal);
     }
 
     render() {
@@ -49,7 +44,7 @@ class AddContentToCurricButton extends Component {
                     <Modal.Title>Add Content to Your Curriculum</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                        <form>
+                        <form id='newContentForm'>
                             Content Title: <input type='text' name='content_title' id='content-title-create' /><br/><br/>
                             Content URL: www.<input type='text' name='content_url' id='content-url-create' /><br/><br/>
                             Content Type:<br/>
@@ -57,6 +52,7 @@ class AddContentToCurricButton extends Component {
                                 Video <input type='radio' name='content_type' value='video' id='content-type-create'/>
                                 Book <input type='radio' name='content_type' value='book' id='content-type-create'/>
                                 Note <input type='radio' name='content_type' value='note' id='content-type-create'/>
+                                <input type='hidden' name='topic_id' value={this.props.topic_id} />
                         </form>
                   </Modal.Body>
                   <Modal.Footer>

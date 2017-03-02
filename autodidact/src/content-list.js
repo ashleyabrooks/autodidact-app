@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ContentItem from './content-item.js'
 import Sortable from 'sortablejs';
 import $ from 'jquery';
+import AddContentToCurricButton from './add-content-to-curric-button.js'
 
 class ContentList extends Component {
 
@@ -66,10 +67,3 @@ class ContentList extends Component {
 
 
 export default ContentList;
-
-
-    // Curriculum holds state of checkbox. Does it have an X or not?
-    // Checkbox is its own component
-    // Checkbox is rendered in ContentList. ContentItem is rendered at the same time.
-    // Checkbox has an onClick attribute/method that is connected to this.props.onClick (or is it this.props.(whatever function exists on the parent))
-    // X's are a state maintained by Curriculum. On click, the state is changed and the Checkbox is filled with an X

@@ -14,13 +14,41 @@ app.secret_key = 'ABC'
 app.jinja_env.undefined = StrictUndefined
 CORS(app)
 
+@app.route('/get-progress.json')
+@cross_origin()
+def get_progress_data():
+    """Query database for user's curriculum progress and return JSON object."""
 
-# @app.route('/')
-# def homepage():
-#     """Show homepage."""
+    progress_data = db.session.query(Content.content_title,
+                                     Content.completed).filter(User.user_id == 1).all()
 
-#     return render_template('index.html')
+    completed = 0
+    incomplete = 0
 
+    for item in progress_data:
+        if item[1] == True:
+            completed += 1
+        elif item[1] == False:
+            incomplete += 1
+
+    # completed_progress_data = {
+    #                           'labels': [
+    #                                 'Complete',
+    #                                 'Incomplete',
+    #                           ],
+    #                           'datasets': [
+    #                             {
+    #                                     'data': [completed, incomplete],
+    #                                     'backgroundColor': ['#FF6384', '#36A2EB'],
+    #                                     'hoverBackgroundColor': ['#FF6384', '36A2EB']
+    #                             }]
+    #                            }
+    
+    # return jsonify(completed_progress_data)
+
+    print completed, incomplete
+
+    return jsonify({'data': [completed, incomplete]})
 
 @app.route('/handle-login', methods=['POST'])
 def handle_login():
@@ -67,7 +95,7 @@ def show_topic_overview():
     return jsonify({'data': topics})
 
 
-@app.route('/curriculum.json', methods=['POST'])
+@app.route('/curriculum.json', methods=['GET', 'POST'])
 @cross_origin()
 def show_curriculum(): #this used to take in topic_id as an argument in order to get curriculum for specific topic
     """Display curriculum page from topic specified in the URL."""
@@ -154,20 +182,6 @@ def mark_complete():
     db.session.commit()
 
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
-
-
-
-@app.route('/save-order', methods=['POST'])
-@cross_origin()
-def save_curric_order():
-    order = request.form.get('order')
-
-    session['curric_order'] = order
-
-
-@app.route('/get-order')
-def get_curric_order():
-    return session['curric_order']
 
 
 if __name__ == "__main__":

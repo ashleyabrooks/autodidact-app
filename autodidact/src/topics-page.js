@@ -39,7 +39,6 @@ class TopicsPage extends Component {
         var newTopic = {newTopic: this.state.newTopic};
 
         $.post('http://localhost:5000/create-topic', newTopic, function() {
-            //this.props.router.push('/#/topics/content?topic_id=' + this.props.topic_id);
             console.log('Added new topic')
         });
         
