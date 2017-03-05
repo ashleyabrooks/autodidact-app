@@ -37,9 +37,9 @@ class AddContentToCurricButton extends Component {
         return (
             <div>
 
-                <button onClick={this.open_modal}> Add New Content </button>
+                <button onClick={this.open_modal} id='content-button'> Add New Content </button>
 
-                <Modal show={this.state.showModal} onHide={this.close}>
+                <Modal show={this.state.showModal} onHide={this.close_modal}>
                   <Modal.Header closeButton>
                     <Modal.Title>Add Content to Your Curriculum</Modal.Title>
                   </Modal.Header>
@@ -56,7 +56,7 @@ class AddContentToCurricButton extends Component {
                         </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <span onClick={this.close}>Cancel</span> &nbsp; &nbsp;
+                    <span onClick={this.close_modal}>Cancel</span> &nbsp; &nbsp;
                     <button onClick={this.addContentToCurric}>Add to Curriculum</button>
                   </Modal.Footer>
                 </Modal>

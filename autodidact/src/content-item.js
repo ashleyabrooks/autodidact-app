@@ -27,9 +27,14 @@ class ContentItem extends Component {
     }
 
     hideEditButton() {
-        this.setState({
-            editMode: false
-        })
+        if (this.state.showModal === false)
+            this.setState({
+                editMode: false
+            })
+        else if (this.state.showModal === true)
+            this.setState({
+                editMode: true
+            })
     }
 
     handleLinkClick() {

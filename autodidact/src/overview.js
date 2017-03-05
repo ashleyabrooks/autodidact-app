@@ -24,7 +24,7 @@ class Overview extends Component {
     render() {
         if (this.state.completedContent && this.state.activeContent)
             return (
-                <div>
+                <div className='page'>
                     <h3>Progress:</h3><br/>
                         <b>Completed # of Items:</b> {this.state.completedContent}
                         <br/>
