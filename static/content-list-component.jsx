@@ -1,3 +1,0 @@
-var ContentList = React.createClass({
-    
-})
