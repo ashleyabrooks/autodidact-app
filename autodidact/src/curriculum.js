@@ -23,6 +23,7 @@ class Curriculum extends Component {
         var topic_id = this.props.location.query.topic_id
         var content_view = this.props.location.query.content_view
         console.log(content_view)
+        console.log(topic_id)
 
         var data_to_send = 
                 {'topic_id': topic_id, 
@@ -45,9 +46,9 @@ class Curriculum extends Component {
             return (
                 <div>
                 <ul className="nav nav-tabs">
-                    <li role="presentation" ><Link to={{ pathname: '/topics/content', query: { topic_id: this.props.topic_id, content_view: 'all' }  }}> All </Link></li>
-                    <li role="presentation" className="active"><Link to={{ pathname: '/topics/content', query: { topic_id: this.props.topic_id, content_view: 'active' } }}> Active </Link></li>
-                    <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.props.topic_id, content_view: 'completed' } }}> Completed </Link></li>
+                    <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'all' }  }}> All </Link></li>
+                    <li role="presentation" className="active"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'active' } }}> Active </Link></li>
+                    <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'completed' } }}> Completed </Link></li>
                 </ul>
 
                     <div className='page'>
