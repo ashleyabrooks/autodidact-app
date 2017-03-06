@@ -31,6 +31,16 @@ class AddContentToCurricButton extends Component {
         var newContentData = $('#newContentForm').serializeArray()
 
         $.post('http://localhost:5000/create-content', newContentData, this.close_modal);
+
+        var data_to_send = 
+                {'topic_id': this.props.topic_id, 
+                'content_view': 'active'};
+
+        this.setState({topic_id: this.props.topic_id,
+                       currentView: 'active'})
+
+        $.post('http://localhost:5000/curriculum.json', data_to_send).done(response =>
+            this.setState({content: response.data}), function() {}.bind(this));
     }
 
     render() {

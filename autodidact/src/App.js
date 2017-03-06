@@ -16,7 +16,7 @@ class App extends Component {
   render() {
           return (
               <div>
-                  <nav className="navbar navbar-default" id='main-navbar'>
+                  <nav className="navbar navbar-default" style={ {"backgroundImage": "none"} } id='main-navbar'>
                     <div className="container-fluid">
                       <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -35,14 +35,7 @@ class App extends Component {
                         </ul>
 
                         <ul className="nav navbar-nav navbar-right">
-                          <li className="dropdown">
-                            <ul className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span className="caret"></span></ul>
-                            <ul className="dropdown-menu">
-                              <li><Link to="#/login">Login</Link></li>
-                              <li role="separator" className="divider"></li>
-                              <li><Link to="#"><AuthenticationButton /></Link></li>
-                            </ul>
-                          </li>
+                          <li><Link to="/login">Login</Link></li>
                         </ul>
                       </div>
                       </div>

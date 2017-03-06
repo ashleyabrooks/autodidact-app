@@ -46,14 +46,25 @@ body {
   vertical-align: middle;
 }
 
-#main-navbar {
+/*#main-navbar {
+  background-color: blue !important;
   color: blue;
-}
+}*/
 
+/*.navbar-default {
+    background-color: blue;
+    border-color: #E7E7E7;
+}
+*/
 .page {
   margin-left: 25px;
 }
 
 #content-button {
   margin: 20px;
+}
+
+.nav-default {
+  background-image: none !important;
+  background-color: #52658F;
 }

@@ -3,7 +3,7 @@ import ContentList from './content-list.js'
 import $ from 'jquery'
 import AddContentToCurricButton from './add-content-to-curric-button.js'
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+// import 'bootstrap/dist/css/bootstrap-theme.css';
 import { Link } from 'react-router';
 
 class Curriculum extends Component {
@@ -14,16 +14,11 @@ class Curriculum extends Component {
             content: [],
             currentView: ''
         };
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-
+    componentWillReceiveProps() {
         var topic_id = this.props.location.query.topic_id
         var content_view = this.props.location.query.content_view
-        console.log(content_view)
-        console.log(topic_id)
 
         var data_to_send = 
                 {'topic_id': topic_id, 
@@ -32,17 +27,31 @@ class Curriculum extends Component {
         this.setState({topic_id: topic_id,
                        currentView: content_view})
 
-        $.post('http://localhost:5000/curriculum.json', data_to_send).done(response =>
-            this.setState({content: response.data}), function() {}.bind(this));
+        $.post('http://localhost:5000/curriculum.json', data_to_send).done(
+            response => { console.log("cwrp callback done", response.data); 
+                          console.log("this=", this);
+                          this.setState({content: response.data})
+                         });
     }
 
-    handleClick() {
-        this.setState({currentView: this.props.location.query.content_view})
-        console.log(this.state.currentView)
+    componentWillMount() {
+
+        var topic_id = this.props.location.query.topic_id
+        var content_view = this.props.location.query.content_view
+
+        var data_to_send = 
+                {'topic_id': topic_id, 
+                'content_view': content_view};
+
+        this.setState({topic_id: topic_id,
+                       currentView: content_view})
+        
+        $.post('http://localhost:5000/curriculum.json', data_to_send).done(response => {
+            this.setState({content: response.data})});
     }
 
     render() {
-        if (this.state.content)
+        if (this.state.content.length)
             return (
                 <div>
                 <ul className="nav nav-tabs">
