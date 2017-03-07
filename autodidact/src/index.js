@@ -8,11 +8,13 @@ import TopicsPage from './topics-page.js'
 import Curriculum from './curriculum.js'
 import LoginPage from './login-page.js'
 import Overview from './overview.js'
-import { Router, Route, hashHistory } from 'react-router'
+import Homepage from './homepage.js'
+import { Router, Route, hashHistory, IndexRoute } from 'react-router'
 
 ReactDOM.render((
     <Router history={ hashHistory }>
         <Route path="/" component={ App }>
+            <IndexRoute component={ Homepage } />
             <Route path='/overview' component={ Overview } />
             <Route path="/topics" component={ TopicsPage } />
             <Route path="/topics/content" component={ Curriculum }>

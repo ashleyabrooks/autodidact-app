@@ -41,9 +41,6 @@ class Overview extends Component {
                     {progressList}
                 </div>
             );
-        <div>
-            fuck
-        </div>
     }
 }
 

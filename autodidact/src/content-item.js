@@ -12,6 +12,7 @@ class ContentItem extends Component {
             url: this.props.url,
             content_id: this.props.content_id,
             completed: '',
+            showModal: false,
         };
 
         if (this.props.completed_status === true)
