@@ -11,8 +11,11 @@ class ContentItem extends Component {
             editMode: false,
             url: this.props.url,
             content_id: this.props.content_id,
-            completed: false,
+            completed: '',
         };
+
+        if (this.props.completed_status === true)
+            this.state = {completed: 'X'}
 
         this.handleLinkClick = this.handleLinkClick.bind(this);
         this.showEditButton = this.showEditButton.bind(this);
@@ -42,6 +45,7 @@ class ContentItem extends Component {
     }
 
     render() {
+        
         return (
             <div id='content-item-div'
                      onMouseEnter={this.showEditButton} 
@@ -49,6 +53,7 @@ class ContentItem extends Component {
 
                 <span id='checkbox-span'>
                     <button className='checkbox' onClick={() => { this.props.onClick(this.props.content_id) }}>
+                        {this.state.completed}
                     </button>
                 </span>
 

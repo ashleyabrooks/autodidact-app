@@ -14,41 +14,47 @@ app.secret_key = 'ABC'
 app.jinja_env.undefined = StrictUndefined
 CORS(app)
 
-@app.route('/get-progress.json')
+@app.route('/get-progress.json', methods=['GET', 'POST'])
 @cross_origin()
 def get_progress_data():
     """Query database for user's curriculum progress and return JSON object."""
 
     progress_data = db.session.query(Content.content_title,
-                                     Content.completed).filter(User.user_id == 1).all()
+                                     Content.completed,
+                                     Topic.topic_name).filter(User.user_id == 1).all()
 
-    completed = 0
-    incomplete = 0
+    formatted_progress_data = {}
 
     for item in progress_data:
-        if item[1] == True:
-            completed += 1
-        elif item[1] == False:
-            incomplete += 1
+        content_item = item[0]
+        completion_status = item[1]
+        topic = item[2]
 
-    # completed_progress_data = {
-    #                           'labels': [
-    #                                 'Complete',
-    #                                 'Incomplete',
-    #                           ],
-    #                           'datasets': [
-    #                             {
-    #                                     'data': [completed, incomplete],
-    #                                     'backgroundColor': ['#FF6384', '#36A2EB'],
-    #                                     'hoverBackgroundColor': ['#FF6384', '36A2EB']
-    #                             }]
-    #                            }
-    
-    # return jsonify(completed_progress_data)
+        content_and_completion_status = (topic, content_item, completion_status)
 
-    print completed, incomplete
+        if topic in formatted_progress_data:
+            formatted_progress_data[topic].append(content_and_completion_status)
+        elif topic not in formatted_progress_data:
+            formatted_progress_data[topic] = [(content_and_completion_status)]
 
-    return jsonify({'data': [completed, incomplete]})
+    topic_progress = {}
+
+    for topic in formatted_progress_data:
+
+        completed = 0
+        incomplete = 0
+
+        for item in formatted_progress_data[topic]:
+            if item[1] == True:
+                completed += 1
+            elif item[1] == False:
+                incomplete += 1
+
+        topic_progress[topic] = (completed, incomplete)
+
+    print topic_progress
+
+    return jsonify({'data': topic_progress})
 
 @app.route('/handle-login', methods=['POST'])
 def handle_login():
@@ -111,21 +117,24 @@ def show_curriculum(): #this used to take in topic_id as an argument in order to
                                     Content.content_url,
                                     Content.content_id,
                                     Content.content_type,
-                                    Content.topic_id).filter(Content.topic_id == topic_id).filter(Content.completed == 'false').all()
+                                    Content.topic_id,
+                                    Content.completed).filter(Content.topic_id == topic_id).filter(Content.completed == 'false').all()
 
     elif content_view == 'all':
         curric_items = db.session.query(Content.content_title,
                                     Content.content_url,
                                     Content.content_id,
                                     Content.content_type,
-                                    Content.topic_id).filter(Content.topic_id == topic_id).all()
+                                    Content.topic_id,
+                                    Content.completed).filter(Content.topic_id == topic_id).all()
 
     elif content_view == 'completed':
         curric_items = db.session.query(Content.content_title,
                                     Content.content_url,
                                     Content.content_id,
                                     Content.content_type,
-                                    Content.topic_id).filter(Content.topic_id == topic_id).filter(Content.completed == 'true').all()
+                                    Content.topic_id,
+                                    Content.completed).filter(Content.topic_id == topic_id).filter(Content.completed == 'true').all()
 
     return jsonify({'data': curric_items})
 

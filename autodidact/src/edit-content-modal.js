@@ -55,8 +55,8 @@ class EditContentModal extends Component {
                             <input type='hidden' name='content_id' id='content-id' value={this.props.content_id} />
                     </Modal.Body>
                       <Modal.Footer>
-                        <span onClick={this.close_modal}>Cancel</span> &nbsp; &nbsp;
-                        <input type="submit" className="btn btn-primary" data-dismiss="modal" value="Submit Edit to Curriculum" onClick={this.submitEdit}/>
+                        <span onClick={this.close_modal} className='cancel-button'>Cancel</span> &nbsp; &nbsp;
+                        <input type="submit" className="content-button" data-dismiss="modal" value="Submit Edit to Curriculum" onClick={this.submitEdit}/>
                       </Modal.Footer>
                   </form>
                 </Modal>

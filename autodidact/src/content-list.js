@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ContentItem from './content-item.js'
 import Sortable from 'sortablejs';
 import $ from 'jquery';
-import AddContentToCurricButton from './add-content-to-curric-button.js'
 
 class ContentList extends Component {
 
@@ -31,12 +30,12 @@ class ContentList extends Component {
                                      url={result[1]} 
                                      content_type={result[3]} 
                                      topic_id={result[4]} 
+                                     completed_status={result[5]}
                                      onClick={this.handleComplete} /> ))
 
         return (
             <div className='container' ref={this.sortableContainersDecorator}>
                 <div className='group'>
-                    <h2 className='group-title'>Curriculum</h2>
                     <div className='group-list' ref={this.sortableGroupDecorator}>
                        {contentList}
                     </div>

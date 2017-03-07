@@ -19,13 +19,14 @@ class TopicsPage extends Component {
     render() {
         return (
             <div className='page'>
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} value={this.state.newTopic} />
-                    <button id='content-button'> Create New Topic </button>
-                </form>
                 
-                <h3>Topics:</h3>
+                
+                <h3>Topics</h3>
                 <TopicsList topics={this.state.topics}/>
+                <form onSubmit={this.handleSubmit}>
+                    <input onChange={this.handleChange} value={this.state.newTopic} />&nbsp;
+                    <button className='content-button'> Create New Topic </button>
+                </form>
             </div>
         );
     }

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Link } from 'react-router'
-import AuthenticationButton from './auth-button.js'
-
 
 class App extends Component {
 
@@ -20,7 +18,7 @@ class App extends Component {
                     <div className="container-fluid">
                       <div className="navbar-header">
                         <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                          <span className="sr-only">Toggle navigation</span>
+                          <span className="sr-only">TEST</span>
                           <span className="icon-bar"></span>
                           <span className="icon-bar"></span>
                           <span className="icon-bar"></span>
@@ -31,7 +29,7 @@ class App extends Component {
                       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                           <li><Link to='/overview'> Overview </Link></li>
-                          <li><Link to="/topics">Topics <span className="sr-only">(current)</span></Link></li>
+                          <li><Link to="/topics">Topics</Link></li>
                         </ul>
 
                         <ul className="nav navbar-nav navbar-right">

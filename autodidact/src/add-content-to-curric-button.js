@@ -40,14 +40,14 @@ class AddContentToCurricButton extends Component {
                        currentView: 'active'})
 
         $.post('http://localhost:5000/curriculum.json', data_to_send).done(response =>
-            this.setState({content: response.data}), function() {}.bind(this));
+            this.setState({content: response.data}));
     }
 
     render() {
         return (
             <div>
 
-                <button onClick={this.open_modal} id='content-button'> Add New Content </button>
+                <button onClick={this.open_modal} className='content-button'> Add New Content </button>
 
                 <Modal show={this.state.showModal} onHide={this.close_modal}>
                   <Modal.Header closeButton>
@@ -66,8 +66,8 @@ class AddContentToCurricButton extends Component {
                         </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <span onClick={this.close_modal}>Cancel</span> &nbsp; &nbsp;
-                    <button onClick={this.addContentToCurric}>Add to Curriculum</button>
+                    <span onClick={this.close_modal} className='cancel-button'>Cancel</span> &nbsp; &nbsp;
+                    <button className='content-button' onClick={this.addContentToCurric}>Add to Curriculum</button>
                   </Modal.Footer>
                 </Modal>
             </div>
