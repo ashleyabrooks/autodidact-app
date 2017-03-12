@@ -60,6 +60,8 @@ def get_progress_data():
 def handle_login():
     """Handle login and redirect to curriculum overview page if accepted."""
 
+    # TODO - hash passwords!
+
     entered_email = request.form.get('user_email')
     entered_pw = request.form.get('user_pw')
 
