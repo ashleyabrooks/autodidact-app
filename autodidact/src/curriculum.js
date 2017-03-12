@@ -48,14 +48,14 @@ class Curriculum extends Component {
     render() {
         if (this.state.content.length)
             return (
-                <div> 
-                <h3 className='page'>Curriculum</h3>
-                <div id='content-view-tabs'>
-                    <ul className="nav nav-tabs">
-                        <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'all' }  }}> All </Link></li>
-                        <li role="presentation" ><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'active' } }}> Active </Link></li>
-                        <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'completed' } }}> Completed </Link></li>
-                    </ul>
+                <div className='page'> 
+                    <h3>Curriculum</h3>
+                    <div id='content-view-tabs'>
+                        <ul className="nav nav-tabs">
+                            <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'all' }  }}> All </Link></li>
+                            <li role="presentation" ><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'active' } }}> Active </Link></li>
+                            <li role="presentation"><Link to={{ pathname: '/topics/content', query: { topic_id: this.state.topic_id, content_view: 'completed' } }}> Completed </Link></li>
+                        </ul>
                 </div>
 
                     <div className='page'>
@@ -66,8 +66,9 @@ class Curriculum extends Component {
                 </div>
             );
         return (
-            <div>
-                Add content to create a curriculum.
+            <div className='page'>
+                <h3>Curriculum</h3><br/><br/>
+                Add content to create a curriculum. <br/><br/>
                 <AddContentToCurricButton topic_id={this.state.topic_id}/>
                 
             </div>

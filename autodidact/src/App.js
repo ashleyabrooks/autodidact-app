@@ -33,7 +33,7 @@ class App extends Component {
                         </ul>
 
                         <ul className="nav navbar-nav navbar-right">
-                          <li><Link to="/login">Login</Link></li>
+                          <li><Link to="/login">Logout</Link></li>
                         </ul>
                       </div>
                       </div>
