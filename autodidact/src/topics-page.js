@@ -23,7 +23,7 @@ class TopicsPage extends Component {
                 
                 <h3>Topics</h3>
                 <TopicsList topics={this.state.topics}/>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} id='new-topic'>
                     <input onChange={this.handleChange} value={this.state.newTopic} />&nbsp;
                     <button className='content-button'> Create New Topic </button>
                 </form>
@@ -33,6 +33,7 @@ class TopicsPage extends Component {
 
     handleChange(e) {
         this.setState({newTopic: e.target.value});
+        
     }
 
     handleSubmit(e) {
@@ -46,6 +47,8 @@ class TopicsPage extends Component {
         $.getJSON('http://localhost:5000/topics.json').done(function(response) {
             this.setState({topics: response.data});
         }.bind(this));
+
+        $("#new-topic").reset();
     }
 }
 
