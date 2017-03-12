@@ -84,6 +84,8 @@ def handle_login():
 
 @app.route('/logout')
 def handle_logout():
+    """Removes user_id from session when user clicks Logout."""
+
     del session['user']
     flash('You have been logged out.')
     print 'logged out'
@@ -187,6 +189,7 @@ def edit_content():
 @app.route('/create-topic', methods=['POST'])
 @cross_origin()
 def create_topic():
+    """Create new topic in topics table in database."""
 
     topic_name = request.form.get('newTopic')
 
@@ -201,6 +204,7 @@ def create_topic():
 @app.route('/mark-complete', methods=['POST'])
 @cross_origin()
 def mark_complete():
+    """Mark content as complete in database."""
 
     content_id = request.form.get('data')
 
